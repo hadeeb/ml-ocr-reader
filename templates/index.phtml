@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>mOCR</title>
+        
+        <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/fabric.js/2.2.0/fabric.min.js"></script>
+
+        <style>
+            body {
+                margin: 0 0;
+                padding: 0;
+                width: 100%;
+                font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+                text-align: center;
+                color: #aaa;
+                font-size: 18px;
+            }
+
+            h1 {
+                color: #719e40;
+                letter-spacing: -3px;
+                font-family: 'Lato', sans-serif;
+                font-size: 100px;
+                font-weight: 200;
+                margin-bottom: 0;
+            }
+            #canvas {
+                border: 2px solid black;
+                border-radius: 3px;
+                margin: auto;
+            }
+            .canvas-container {
+                margin: auto;
+            }
+        </style>
+        
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarColor01">
+                <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Features</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Pricing</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" placeholder="Search" type="text">
+                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+        <h1>mOCR</h1>
+        <div>Malayalam OCR</div>
+        <div>Contribute to data collection</div>
+        <span>Current character</span>
+        <select id="char">
+            <?php foreach ($chars as $key => $value): ?>
+            <option value= <?=$value['key']?> >
+                &#<?php echo $value['unicode']?>
+            </option>
+            <?php endforeach; ?>
+        </select>
+        <canvas id="canvas" width="300" height="300" class="canvas"></canvas>
+        <button id="freedraw" class="btn btn-info">Pause freedraw</button>
+        <button id="clear" class="btn btn-info">Clear</button>
+        
+        <i class="fas fa-times"></i>
+        <!-- ✘ -->
+        <i class="fas fa-check"></i>
+        <!-- ✔ -->
+    </body>
+    <script>
+        var canvas;
+        window.onload =  function () {
+            canvas = window._canvas = new fabric.Canvas('canvas');
+            canvas.freeDrawingBrush.width = 8;
+            canvas.isDrawingMode = true;
+            canvas.freeDrawingBrush.color = '#000000';
+            canvas.renderAll();
+            var pause_btn = document.getElementById('freedraw');
+            
+            pause_btn.addEventListener('click', function () {
+                canvas.isDrawingMode = !canvas.isDrawingMode;
+                if(canvas.isDrawingMode) {
+                    pause_btn.innerHTML = "Pause freedraw";
+                }
+                else {
+                    pause_btn.innerHTML = "Enable freedraw";
+                }
+            });
+            document.getElementById('clear').addEventListener('click', function () {
+                canvas.clear();
+            });
+        };
+    </script>
+</html>
