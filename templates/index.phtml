@@ -6,30 +6,64 @@
         <title>mOCR</title>
         
         <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.min.css">
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://bootswatch.com/4/materia/bootstrap.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet">
+        <!--        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <script src="http://cdnjs.cloudflare.com/ajax/libs/fabric.js/2.2.0/fabric.min.js"></script>
 
         <style>
+            /* For Snackbar */
+            #snackbar {
+                visibility: hidden;
+                min-width: 250px;
+                margin-left: -125px;
+                background-color: #222222;
+                color: #ffffff;
+                text-align: center;
+                border-radius: 2.25rem;
+                padding: 16px;
+                position: fixed;
+                z-index: 1;
+                left: 50%;
+                bottom: 30px;
+                font-size: 17px;
+            }
+
+            #snackbar.show {
+                visibility: visible;
+                -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+                animation: fadein 0.5s, fadeout 0.5s 2.5s;
+            }
+
+            @-webkit-keyframes fadein {
+                from {bottom: 0; opacity: 0;}
+                to {bottom: 30px; opacity: 1;}
+            }
+
+            @keyframes fadein {
+                from {bottom: 0; opacity: 0;}
+                to {bottom: 30px; opacity: 1;}
+            }
+
+            @-webkit-keyframes fadeout {
+                from {bottom: 30px; opacity: 1;}
+                to {bottom: 0; opacity: 0;}
+            }
+
+            @keyframes fadeout {
+                from {bottom: 30px; opacity: 1;}
+                to {bottom: 0; opacity: 0;}
+            }
+            /* Snackbar end */
             body {
                 margin: 0 0;
                 padding: 0;
                 width: 100%;
-                font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
                 text-align: center;
-                color: #aaa;
-                font-size: 18px;
-            }
-
-            h1 {
-                color: #719e40;
-                letter-spacing: -3px;
-                font-family: 'Lato', sans-serif;
-                font-size: 100px;
-                font-weight: 200;
-                margin-bottom: 0;
+                font-size: 1.3rem;
             }
             #canvas {
                 border: 2px solid black;
@@ -39,63 +73,129 @@
             .canvas-container {
                 margin: auto;
             }
+            .icon-container > i {
+                padding: 20px 40px;
+            }
+            .icon-container > i:hover {
+                background-color: #e5e5e5;
+                cursor: pointer;
+            }
+
+            .splash {
+                padding: 12em 0 3em;
+                background-color: #2196F3;
+                color: #ffffff;
+                text-align: center;
+            }
+
+            .handwr {
+                font-family: 'Gloria Hallelujah', cursive;
+            }
+            .heading {
+                font-size: 30vw;
+            }
+            .subheading {
+                font-size: 2rem;
+                color: #ffffff80;
+            }
+            .header-desc {
+                font-size: 1.5rem;
+            }
+            .header-desc > a {
+                color: #ffffff;
+            }
+            @media screen and (min-width: 768px) {
+                .heading {
+                    font-size: 8rem;
+                }
+            }
+            @media screen and (max-width: 768px) {
+                .md-only {
+                    display: none;
+                }
+            }
         </style>
         
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-            <a class="navbar-brand" href="#">Navbar</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            
-            <div class="collapse navbar-collapse" id="navbarColor01">
-                <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Features</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Pricing</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-                </li>
-                </ul>
-                <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" placeholder="Search" type="text">
-                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-                </form>
+        <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary navbar-transparent">
+            <div class="container">
+                <a class="navbar-brand handwr" href="#">mOCR</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarColor01">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Features</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">About</a>
+                        </li>
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0">
+                    </form>
+                </div>
             </div>
         </nav>
-        <h1>mOCR</h1>
-        <div>Malayalam OCR</div>
-        <div>Contribute to data collection</div>
-        <span>Current character</span>
-        <select id="char">
-            <?php foreach ($chars as $key => $value): ?>
-            <option value= <?=$value['key']?> >
-                &#<?php echo $value['unicode']?>
-            </option>
-            <?php endforeach; ?>
-        </select>
-        <canvas id="canvas" width="300" height="300" class="canvas"></canvas>
-        <button id="freedraw" class="btn btn-info">Pause freedraw</button>
-        <button id="clear" class="btn btn-info">Clear</button>
-        
-        <i class="fas fa-times"></i>
-        <!-- ✘ -->
-        <i class="fas fa-check"></i>
-        <!-- ✔ -->
+        <div class="splash" style="background-position: 0px 0px;">
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="heading handwr">mOCR</h1>
+                        <div class="subheading">Malayalam OCR</div>
+                        <p class="header-desc"><span class="handwr">mOCR</span> is an open-source Optical Character Recognition for Malayalam language.</p>
+                        <p class="header-desc"> It is a work in progress. For now, <a href="#data_contrib">contribute</a> to the data collection.</p>
+                        <p  class="header-desc">
+                            <a href="#data_contrib"><button type="button" class="btn btn-secondary">Take me there</button></a>
+                        </p>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="container">
+                <div id="data_contrib">Contribute to data collection</div>
+                <div class="md-only text-danger">Use a touchscreen device or a stylus for better experience</div>
+                <div>Write the current character in the canvas below</div>
+                <div class="form-group">
+                    <label for="charSelect">Current character</label>
+                    <select class="form-control" style="width:auto;display:inline;" id="charSelect">
+                        <?php foreach ($chars as $key => $value): ?>
+                        <option value= <?=$value['unicode']?> >
+                            &#<?php echo $value['unicode']?>
+                        </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                    
+                <canvas id="canvas" width="300" height="300" class="canvas"></canvas>
+                <div class="icon-container">
+                    <i class="fas fa-times fa-2x text-danger" onclick="clearCanvas()"></i>
+                    <!-- ✘ -->
+                    <i class="fas fa-check fa-2x text-success" onclick="submitImage()"></i>
+                    <!-- ✔ -->
+                </div>
+                <button id="freedraw" class="btn btn-info">Enable freedraw</button>
+                <button id="clear" class="btn btn-info" onclick="clearCanvas()">Clear</button>
+            </div>
+        </div>
+
+        <div id="snackbar"></div>
+
     </body>
     <script>
-        var canvas;
+        let canvas;
         window.onload =  function () {
             canvas = window._canvas = new fabric.Canvas('canvas');
             canvas.freeDrawingBrush.width = 8;
-            canvas.isDrawingMode = true;
+            canvas.isDrawingMode = false;
             canvas.freeDrawingBrush.color = '#000000';
             canvas.renderAll();
             var pause_btn = document.getElementById('freedraw');
@@ -109,9 +209,32 @@
                     pause_btn.innerHTML = "Enable freedraw";
                 }
             });
-            document.getElementById('clear').addEventListener('click', function () {
-                canvas.clear();
-            });
+            // document.getElementById('clear').addEventListener('click', function () {
+            //     canvas.clear();
+            // });
         };
+        function submitImage() {
+            let char = document.getElementById('charSelect').value;
+            let img = canvas.toDataURL('png');
+            showSnackbar('Uploading');
+            $.post('dataentry',{
+                'image':img,
+                'char':char
+            },function (data,status) {
+                showSnackbar(status);
+                if(status === 200)
+                    showSnackbar('Uploaded');
+            });
+            console.log("Test");
+        }
+        function clearCanvas() {
+            canvas.clear();
+        }
+        function showSnackbar(text) {
+            let x = document.getElementById("snackbar");
+            x.innerText = text;
+            x.className = "show";
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+        }
     </script>
 </html>

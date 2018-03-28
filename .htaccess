@@ -1,0 +1,9 @@
+
+# HTID:3364962: DO NOT REMOVE OR MODIFY THIS LINE AND THE LINES BELOW
+php_value display_errors 1
+# DO NOT REMOVE OR MODIFY THIS LINE AND THE LINES ABOVE HTID:3364962:
+<IfModule mod_rewrite.c>
+   RewriteEngine on
+   RewriteRule ^$ public/     [L]
+   RewriteRule (.*) public/$1 [L]
+</IfModule>

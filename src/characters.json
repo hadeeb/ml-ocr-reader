@@ -1,52 +1,182 @@
-{
-    "1":{
-        "key":1,
-        "char":"a",
-        "unicode":"3333"
+[
+    {
+        "char": "a",
+        "unicode": 3333
     },
-    "2":{
-        "key":2,
-        "char":"a",
-        "unicode":"3334"
+    {
+        "char": "a",
+        "unicode": 3334
     },
-    "3":{
-        "key":3,
-        "char":"c",
-        "unicode":"3335"
+    {
+        "char": "a",
+        "unicode": 3335
     },
-    "4":{
-        "key":4,
-        "char":"a",
-        "unicode":"3336"
+    {
+        "char": "a",
+        "unicode": 3336
     },
-    "5":{
-        "key":5,
-        "char":"a",
-        "unicode":"3337"
+    {
+        "char": "a",
+        "unicode": 3337
     },
-    "6":{
-        "key":6,
-        "char":"a",
-        "unicode":"3338"
+    {
+        "char": "a",
+        "unicode": 3338
     },
-    "7":{
-        "key":7,
-        "char":"a",
-        "unicode":"3342"
+    {
+        "char": "a",
+        "unicode": 3339
     },
-    "8":{
-        "key":1,
-        "char":"a",
-        "unicode":"3343"
+    {
+        "char": "a",
+        "unicode": 3342
     },
-    "9":{
-        "key":1,
-        "char":"a",
-        "unicode":"3344"
+    {
+        "char": "a",
+        "unicode": 3343
     },
-    "10":{
-        "key":1,
-        "char":"a",
-        "unicode":"3345"
+    {
+        "char": "a",
+        "unicode": 3346
+    },
+    {
+        "char": "a",
+        "unicode": 3349
+    },
+    {
+        "char": "a",
+        "unicode": 3350
+    },
+    {
+        "char": "a",
+        "unicode": 3351
+    },
+    {
+        "char": "a",
+        "unicode": 3352
+    },
+    {
+        "char": "a",
+        "unicode": 3353
+    },
+    {
+        "char": "a",
+        "unicode": 3354
+    },
+    {
+        "char": "a",
+        "unicode": 3355
+    },
+    {
+        "char": "a",
+        "unicode": 3356
+    },
+    {
+        "char": "a",
+        "unicode": 3357
+    },
+    {
+        "char": "a",
+        "unicode": 3358
+    },
+    {
+        "char": "a",
+        "unicode": 3359
+    },
+    {
+        "char": "a",
+        "unicode": 3360
+    },
+    {
+        "char": "a",
+        "unicode": 3361
+    },
+    {
+        "char": "a",
+        "unicode": 3362
+    },
+    {
+        "char": "a",
+        "unicode": 3363
+    },
+    {
+        "char": "a",
+        "unicode": 3364
+    },
+    {
+        "char": "a",
+        "unicode": 3365
+    },
+    {
+        "char": "a",
+        "unicode": 3366
+    },
+    {
+        "char": "a",
+        "unicode": 3367
+    },
+    {
+        "char": "a",
+        "unicode": 3368
+    },
+    {
+        "char": "a",
+        "unicode": 3370
+    },
+    {
+        "char": "a",
+        "unicode": 3371
+    },
+    {
+        "char": "a",
+        "unicode": 3372
+    },
+    {
+        "char": "a",
+        "unicode": 3373
+    },
+    {
+        "char": "a",
+        "unicode": 3374
+    },
+    {
+        "char": "a",
+        "unicode": 3375
+    },
+    {
+        "char": "a",
+        "unicode": 3376
+    },
+    {
+        "char": "a",
+        "unicode": 3377
+    },
+    {
+        "char": "a",
+        "unicode": 3378
+    },
+    {
+        "char": "a",
+        "unicode": 3379
+    },
+    {
+        "char": "a",
+        "unicode": 3380
+    },
+    {
+        "char": "a",
+        "unicode": 3381
+    },
+    {
+        "char": "a",
+        "unicode": 3382
+    },
+    {
+        "char": "a",
+        "unicode": 3383
+    },
+    {
+        "char": "a",
+        "unicode": 3384
     }
-}
+]
