@@ -73,16 +73,25 @@
             .canvas-container {
                 margin: auto;
             }
-            .icon-container > i {
-                padding: 20px 40px;
+            .icon-container {
+                display: flex;
+                width: 300px;
+                margin: auto;
             }
-            .icon-container > i:hover {
+            .icon-container > div {
+                flex: 1;
+                padding: 19px 0;
+                background-color: #ffffffff;
+            }
+            .icon-container > div:hover {
                 background-color: #e5e5e5;
                 cursor: pointer;
             }
-
+            .icon-container > div > div {
+                font-size: 0.5rem;
+            }
             .splash {
-                padding: 12em 0 3em;
+                padding: 6em 0 3em;
                 background-color: #2196F3;
                 color: #ffffff;
                 text-align: center;
@@ -103,6 +112,21 @@
             }
             .header-desc > a {
                 color: #ffffff;
+            }
+            .row {
+                margin:0;
+            }
+            #data_contrib {
+                padding-top: 20px;
+                font-size: 2rem;
+                font-weight: bold;
+            }
+            #charSelect {
+                width: auto;
+                display: inline;
+                min-width: 3rem;
+                font-size: 1.5rem;
+                height: 4rem;
             }
             @media screen and (min-width: 768px) {
                 .heading {
@@ -125,20 +149,27 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarColor01">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                        </li>
+                    <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Features</a>
+                            <a class="nav-link" href="#">Get Dataset</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="mailto:admin@mocr.ml" target="_top">Contact Us</a>
                         </li>
                     </ul>
                     <form class="form-inline my-2 my-lg-0">
                     </form>
                 </div>
+                <ul class="navbar-nav flex-row ml-md-auto d-none d-lg-flex">
+                    <li class="nav-item">
+                        <a class="nav-link p-2" href="https://github.com/" target="_blank">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </li>
+                </ul>
             </div>
         </nav>
         <div class="splash" style="background-position: 0px 0px;">
@@ -166,7 +197,7 @@
                 <div>Write the current character in the canvas below</div>
                 <div class="form-group">
                     <label for="charSelect">Current character</label>
-                    <select class="form-control" style="width:auto;display:inline;" id="charSelect">
+                    <select class="form-control" id="charSelect">
                         <?php foreach ($chars as $key => $value): ?>
                         <option value= <?=$value['unicode']?> >
                             &#<?php echo $value['unicode']?>
@@ -174,16 +205,26 @@
                         <?php endforeach; ?>
                     </select>
                 </div>
+                <div id="sym_warning" class="text-danger"></div>
                     
                 <canvas id="canvas" width="300" height="300" class="canvas"></canvas>
                 <div class="icon-container">
-                    <i class="fas fa-times fa-2x text-danger" onclick="clearCanvas()"></i>
-                    <!-- ✘ -->
-                    <i class="fas fa-check fa-2x text-success" onclick="submitImage()"></i>
-                    <!-- ✔ -->
+                    <div onclick="clearCanvas()">
+                        <i class="fas fa-sync text-primary"></i>
+                        <div>Clear</div>
+                        <!-- ✘ -->
+                    </div>
+                    <div onclick="submitImage()">
+                        <i class="fas fa-check text-success"></i>
+                        <div>Submit</div>
+                        <!-- ✔ -->
+                    </div>
+                    <div onclick="nextChar()">
+                        <i class="fas fa-ban text-danger"></i>
+                        <div>Skip</div>
+                    </div>
                 </div>
-                <button id="freedraw" class="btn btn-info">Enable freedraw</button>
-                <button id="clear" class="btn btn-info" onclick="clearCanvas()">Clear</button>
+                <button id="freedraw" class="btn btn-info">Pause freedraw</button>
             </div>
         </div>
 
@@ -193,13 +234,13 @@
     <script>
         let canvas;
         window.onload =  function () {
+            $("#charSelect option:first").attr('selected',true);
             canvas = window._canvas = new fabric.Canvas('canvas');
             canvas.freeDrawingBrush.width = 8;
-            canvas.isDrawingMode = false;
+            canvas.isDrawingMode = true;
             canvas.freeDrawingBrush.color = '#000000';
             canvas.renderAll();
             var pause_btn = document.getElementById('freedraw');
-            
             pause_btn.addEventListener('click', function () {
                 canvas.isDrawingMode = !canvas.isDrawingMode;
                 if(canvas.isDrawingMode) {
@@ -209,26 +250,48 @@
                     pause_btn.innerHTML = "Enable freedraw";
                 }
             });
-            // document.getElementById('clear').addEventListener('click', function () {
-            //     canvas.clear();
-            // });
+            $('#charSelect').on('change', function() {
+                sym_warning(this.value);
+            });
         };
+        function sym_warning(num) {
+            if( num > 3389 && num < 3416 )
+                $('#sym_warning').text("Don't trace the dotted lines");
+            else
+                $('#sym_warning').text(" ");
+        }
         function submitImage() {
             let char = document.getElementById('charSelect').value;
             let img = canvas.toDataURL('png');
-            showSnackbar('Uploading');
+            showSnackbar('Uploading '+ String.fromCharCode(char));
             $.post('dataentry',{
                 'image':img,
                 'char':char
             },function (data,status) {
-                showSnackbar(status);
-                if(status === 200)
-                    showSnackbar('Uploaded');
+                if(status === 'success') {
+                    showSnackbar('Uploaded '+ String.fromCharCode(data));
+                    if(data!='3415')  
+                        nextChar();
+                    if(data == '3415')
+                        setTimeout(()=>{
+                            showSnackbar('Thank you for your time');
+                        }, 1000);
+                }
             });
-            console.log("Test");
         }
         function clearCanvas() {
             canvas.clear();
+        }
+        function nextChar() {
+            canvas.clear();
+            $('#charSelect > option:selected')
+                .prop('selected',false)
+                .next()
+                .prop('selected',true);
+            sym_warning( $('#charSelect').val() );
+            setTimeout(() => {
+                showSnackbar('Current character '+ String.fromCharCode($('#charSelect').val()));
+            }, 3000);
         }
         function showSnackbar(text) {
             let x = document.getElementById("snackbar");
